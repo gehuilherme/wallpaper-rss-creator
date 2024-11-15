@@ -38,7 +38,7 @@ final class XmlFeedService
 
     public static function makeChannelFeed(string $channel): string|null
     {
-        $channelFlowBr = "<!-- $channel --><channel><title>$channel</title>";
+        $channel = "<!-- $channel --><channel><title>$channel</title>";
 
         $messages = XmlMessages::where('message_channel', '=', $channel)->orderBy('image_priority', 'asc')->get();
 
@@ -49,18 +49,18 @@ final class XmlFeedService
                 $buttonLink = $message->button_link ?? '';
                 $imgLink = $message->img_link ?? '';
 
-                $channelFlowBr .= '<item>';
-                $channelFlowBr .= "<title>$title</title>";
-                $channelFlowBr .= "<subtitle>$subtitle</subtitle>";
-                $channelFlowBr .= "<buttonLink>$buttonLink</buttonLink>";
-                $channelFlowBr .= "<linkImg>$imgLink</linkImg>";
-                $channelFlowBr .= '</item>';
+                $channel .= '<item>';
+                $channel .= "<title>$title</title>";
+                $channel .= "<subtitle>$subtitle</subtitle>";
+                $channel .= "<buttonLink>$buttonLink</buttonLink>";
+                $channel .= "<linkImg>$imgLink</linkImg>";
+                $channel .= '</item>';
             }
         }
 
-        $channelFlowBr .= "</channel>";
+        $channel .= "</channel>";
 
-        return $channelFlowBr;
+        return $channel;
     }
 
     public static function getByMessageChannel($channel): Collection
